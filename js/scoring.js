@@ -1,18 +1,12 @@
-console.log("script loaded");
-const inputs = document.querySelectorAll(".score");
-const totalScore = document.getElementById("total");
+//only calculation logic
 
-function updateTotal(){
+function calculateTotal(state){
     let sum = 0;
 
-    inputs.forEach(input => {
-        sum += Number(input.value);
-    });
+    for (let key in state){
+        sum += state[key]
+    }
 
-    totalScore.textContent = sum;
+    return sum;
 }
 
-inputs.forEach(input => {
-    input.addEventListener("input", updateTotal);
-    //input.addEventListener("change", updateTotal);
-});
