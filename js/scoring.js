@@ -1,12 +1,21 @@
 //only calculation logic
+import { CATEGORIES, state } from "./state.js";
 
-function calculateTotal(state){
-    let sum = 0;
+export function addPlayer(name){
+    state.players.push(name);
+    state.scores.push(
+        CATEGORIES.map(() => null)
+    );
+}
 
-    for (let key in state){
-        sum += state[key]
-    }
+export function nextPlayer(){
+    state.currentPlayerIndex = 
+        (state.currentPlayerIndex + 1) % state.players.length
+}
 
-    return sum;
+export function setScore(category, value){
+    const player = state.currentPlayerIndex;
+    const categoryIndex = CATEGORIES.indexOf(category)
+    state.scores[player][categoryIndex] = value;
 }
 
