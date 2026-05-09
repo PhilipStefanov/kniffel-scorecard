@@ -1,31 +1,29 @@
 <!DOCTYPE html>
-<html lang = "en">
+<html lang = "de">
 <head>
     <meta charset="UTF-8">
     <title>Kniffel Scorecard</title>
 </head>
 <body>
-    <table>
-        <tr>
-            <th>Category</th>
-            <th>Player1</th>
-        </tr>
-        <tr>
-            <td>One</td>
-            <td><input type="number" class="score" data-category="ones" min="0" max="5"></td>
-        </tr>
-        <tr>
-            <td>Two</td>
-            <td><input type="number" class="score" data-category="twos" min="0" max="10" step="2"></td>
-        </tr>
+    <header>
+        <h1>My fantastic Kniffel Scorecard</h1>
+        <div class="header-actions">
+            <button id="addPlayerBtn">Add Spieler</button>
+            <button id="reset">Reset</button>
+        </div>
+    </header>
 
-        <tr>
-            <td>Total</td>
-            <td id="total">0</td>
-        </tr>
-    </table>
+    <main>
+        <div id="scorecardContainer">
+            <table id="scorecard">
+                <thead id="playerHeader"></thead>
+                <tbody id="scorecardBody"></tbody>
+            </table>
+        </div>
+    </main>
     
     <script src="js/state.js"></script>
     <script src="js/scoring.js"></script>
     <script src="js/ui.js"></script>
+    
 </body>
