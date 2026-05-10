@@ -9,6 +9,11 @@ const UI = (() => {
 
         const tr = document.createElement('tr');
 
+        //corner cell
+        const corner = document.createElement('th');
+        corner.className = 'category-column';
+        tr.appendChild(corner);
+
         players.forEach(player => {
             const th = document.createElement('th');
             th.className = 'player-col';
@@ -18,12 +23,20 @@ const UI = (() => {
             nameSpan.title = 'Klicken zum umbennen';
             nameSpan.addEventListener('click', () => handleRenamePlayer(player.id, nameSpan));
 
+            const removeBtn = document.createElement('button');
+            removeBtn.title = 'Remove Player';
+            removeBtn.textContent = 'X';
+            removeBtn.className = 'remove-player-btn';
+            removeBtn.addEventListener('click', () => handleRemovePlayer(player.id))
+
             th.appendChild(nameSpan);
+            th.appendChild(removeBtn);
             tr.appendChild(th)
         });
 
         thead.appendChild(tr);
     }
+
 
     function handleRenamePlayer(playerID, nameSpan){
         const current = nameSpan.textContent;
@@ -37,6 +50,11 @@ const UI = (() => {
         const name = prompt('Spielername:')
         if (!name || !name.trim()) return;
         State.addPlayer(name.trim());
+        render();
+    }
+
+    function handleRemovePlayer(playerID){
+        State.removePlayer(playerID);
         render();
     }
 
