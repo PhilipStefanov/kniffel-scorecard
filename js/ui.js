@@ -3,6 +3,11 @@
 const UI = (() => {
 
     function render(){
+        renderHeader();
+        renderBody();
+    }
+
+    function renderHeader(){
         const thead = document.getElementById("playerHeader");
         const players = State.getPlayers();
         thead.innerHTML = '';
@@ -37,6 +42,31 @@ const UI = (() => {
         thead.appendChild(tr);
     }
 
+    function renderBody(){
+        const players = State.getPlayers();
+        const tbody = document.getElementById('scorecardBody');
+        tbody.innerHTML = '';
+
+        CATEGORIES.forEach(cat => {
+            const tr = document.createElement('tr');
+
+            const cat_cell = document.createElement('td');
+            cat_cell.textContent = cat.label;
+            cat_cell.className = 'category-column';
+
+            tr.appendChild(cat_cell);
+
+            players.forEach(player => {
+                const cell = document.createElement('td');
+                cell.className = 'score-cell';
+                cell.textContent = '0';
+                tr.append(cell);
+                
+            });
+            tbody.appendChild(tr);
+            
+        })
+    }
 
     function handleRenamePlayer(playerID, nameSpan){
         const current = nameSpan.textContent;
