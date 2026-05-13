@@ -59,13 +59,34 @@ const UI = (() => {
             players.forEach(player => {
                 const cell = document.createElement('td');
                 cell.className = 'score-cell';
-                cell.textContent = '0';
+                
+                const value = State.getScore(player.id, cat.id);
+                cell.textContent = value ?? '-';
+                
+                if (cat.type === 'input'){
+                    cell.addEventListener('click', () => handleInputCell(cat.id, player.id));
+                } //else {
+                    //cell.addEventListener('click', () => handleCalcCell(cat, player));
+                //}
+                
                 tr.append(cell);
                 
             });
             tbody.appendChild(tr);
             
         })
+    }
+
+    function handleInputCell(categoryID, playerID){
+        const input = prompt('Gib Punkte ein:');
+        const value = Number(input);
+        State.setScore(playerID, categoryID, value);
+        render();
+
+    }
+
+    function handleCalcCell(categoryID, player){
+
     }
 
     function handleRenamePlayer(playerID, nameSpan){
