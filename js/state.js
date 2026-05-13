@@ -2,6 +2,13 @@
 const CATEGORIES = [
     {id: 'ones', label: 'Einser', type: 'input'},
     {id: 'twos', label: 'Zweier', type: 'input'},
+    {id: 'threes', label: 'Dreier', type: 'input'},
+    {id: 'fours', label: 'Vierer', type: 'input'},
+    {id: 'fives', label: 'Fünfer', type: 'input'},
+    {id: 'sixes', label: 'Sechser', type: 'input'},
+    {id: 'gesamt', label: 'Gesamt', type: 'calc'},
+    {id: 'bonus', label: 'Bonus', type: 'calc'},
+    {id: 'upper-total', label: 'Gesamt Up', type: 'calc'}
 ];
 
 const State = (() => {
