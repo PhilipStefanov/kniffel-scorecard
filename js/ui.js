@@ -60,14 +60,12 @@ const UI = (() => {
                 const cell = document.createElement('td');
                 cell.className = 'score-cell';
                 
-                const value = State.getScore(player.id, cat.id);
-                cell.textContent = value ?? '-';
+                const value = Scoring.resolveValue(cat, player);
+                cell.textContent = String(value) ?? '-';
                 
                 if (cat.type === 'input'){
                     cell.addEventListener('click', () => handleInputCell(cat.id, player.id));
-                } //else {
-                    //cell.addEventListener('click', () => handleCalcCell(cat, player));
-                //}
+                }
                 
                 tr.append(cell);
                 
@@ -82,10 +80,6 @@ const UI = (() => {
         const value = Number(input);
         State.setScore(playerID, categoryID, value);
         render();
-
-    }
-
-    function handleCalcCell(categoryID, player){
 
     }
 
