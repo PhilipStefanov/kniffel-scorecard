@@ -30,7 +30,19 @@ const Scoring = (() => {
     function totalUpper(player){
         return getUpperScore(player) + hasBonus(player);
     }
+
+    function resolveValue(category, player){
+        if (category.type === 'input'){
+            return player.scores[category.id] ?? 0;
+        } else {
+            if (category.id === 'bonus') return hasBonus(player);
+            if (category.id === 'gesamt') return getUpperScore(player);
+            if (category.id === 'upper-total') return totalUpper(player);      
+            
+        }
+        
+    }
          
-    return { getUpperScore, hasBonus, totalUpper };
+    return { getUpperScore, hasBonus, totalUpper, resolveValue };
 })();
  
