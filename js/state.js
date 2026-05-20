@@ -1,11 +1,11 @@
 //stores all scores, no UI, no DOM, no logic
 const CATEGORIES = [
-    {id: 'ones', label: 'Einser', type: 'input'},
-    {id: 'twos', label: 'Zweier', type: 'input'},
-    {id: 'threes', label: 'Dreier', type: 'input'},
-    {id: 'fours', label: 'Vierer', type: 'input'},
-    {id: 'fives', label: 'Fünfer', type: 'input'},
-    {id: 'sixes', label: 'Sechser', type: 'input'},
+    {id: 'ones', label: 'Einser', type: 'input', val: '1'},
+    {id: 'twos', label: 'Zweier', type: 'input', val: '2'},
+    {id: 'threes', label: 'Dreier', type: 'input', val: '3'},
+    {id: 'fours', label: 'Vierer', type: 'input', val: '4'},
+    {id: 'fives', label: 'Fünfer', type: 'input', val: '5'},
+    {id: 'sixes', label: 'Sechser', type: 'input', val: '6'},
     {id: 'gesamt', label: 'Gesamt', type: 'calc'},
     {id: 'bonus', label: 'Bonus', type: 'calc'},
     {id: 'upper-total', label: 'Gesamt Up', type: 'calc'}
@@ -68,3 +68,9 @@ const State = (() => {
     return { addPlayer, setScore, removeScore, getPlayers, getScore, renamePlayer, removePlayer };
 })();
 
+const popupState = {
+    visible: true,
+    playerID: null,
+    categoryID: null,
+    allowedValues: []
+}
