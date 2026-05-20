@@ -56,6 +56,8 @@ const UI = (() => {
 
             tr.appendChild(cat_cell);
 
+            
+
             players.forEach(player => {
                 const cell = document.createElement('td');
                 cell.className = 'score-cell';
@@ -64,7 +66,7 @@ const UI = (() => {
                 cell.textContent = String(value) ?? '-';
                 
                 if (cat.type === 'input'){
-                    cell.addEventListener('click', () => handleInputCell(cat.id, player.id));
+                    cell.addEventListener('click', () => handleInputCell(cat, player.id));
                 }
                 
                 tr.append(cell);
@@ -72,15 +74,53 @@ const UI = (() => {
             });
             tbody.appendChild(tr);
             
-        })
+        });
     }
 
-    function handleInputCell(categoryID, playerID){
-        const input = prompt('Gib Punkte ein:');
-        const value = Number(input);
-        State.setScore(playerID, categoryID, value);
-        render();
+    function openPopup(){
+        const popup = document.getElementById('scorePicker');
+        popup.classList.remove('hidden');
+    }
 
+    function closePopup(){
+        const popup = document.getElementById('scorePicker');
+        popup.classList.add('hidden');
+
+        //reset popupState
+        popupState.playerID = null;
+        popupState.categoryID = null;
+        popupState.allowedValues = [];
+    }
+
+    function renderPopup(){
+        const popup = document.getElementById('scorePicker');
+        popup.innerHTML = '';
+
+        popupState.allowedValues.forEach(value => {
+            const btn = document.createElement('button');
+            btn.textContent = String(value);
+            btn.className = 'popup-score-btn';
+
+            btn.addEventListener('click', () => {
+                State.setScore(popupState.playerID, popupState.categoryID, value);
+                closePopup();
+                render();
+            })
+
+            popup.appendChild(btn);
+        });
+
+    }
+
+    function handleInputCell(category, playerID){
+        
+        popupState.playerID = playerID;
+        popupState.categoryID = category.id;
+        popupState.allowedValues = Scoring.getAllowedValues(category);
+
+        openPopup();
+        renderPopup();
+        
     }
 
     function handleRenamePlayer(playerID, nameSpan){
