@@ -42,7 +42,18 @@ const Scoring = (() => {
         }
         
     }
+
+    function getAllowedValues(category){
+        let allowed = [];
+        const step = Number(category.val);
+        for(let i=0; i<=5; i++){
+            allowed.push(i*step);
+        }
+
+        return allowed;
+
+    }
          
-    return { getUpperScore, hasBonus, totalUpper, resolveValue };
+    return { getUpperScore, hasBonus, totalUpper, resolveValue, getAllowedValues };
 })();
  
