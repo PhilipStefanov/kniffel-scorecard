@@ -8,6 +8,7 @@ const UI = (() => {
     }
 
     function renderHeader(){
+        console.log("header");
         const thead = document.getElementById("playerHeader");
         const players = State.getPlayers();
         thead.innerHTML = '';
@@ -26,13 +27,21 @@ const UI = (() => {
             const nameSpan = document.createElement('span');
             nameSpan.textContent = player.name;
             nameSpan.title = 'Klicken zum umbennen';
-            nameSpan.addEventListener('click', () => handleRenamePlayer(player.id, nameSpan));
+            if (!State.hasStarted()){
+                nameSpan.addEventListener('click', () => handleRenamePlayer(player.id, nameSpan));
+            }
+            
 
             const removeBtn = document.createElement('button');
             removeBtn.title = 'Remove Player';
             removeBtn.textContent = 'X';
             removeBtn.className = 'remove-player-btn';
-            removeBtn.addEventListener('click', () => handleRemovePlayer(player.id))
+            if (!State.hasStarted()){
+                removeBtn.addEventListener('click', () => handleRemovePlayer(player.id));
+            }
+            
+            
+            
 
             th.appendChild(nameSpan);
             th.appendChild(removeBtn);
@@ -43,6 +52,7 @@ const UI = (() => {
     }
 
     function renderBody(){
+        console.log("body");
         const players = State.getPlayers();
         const tbody = document.getElementById('scorecardBody');
         tbody.innerHTML = '';
@@ -143,8 +153,15 @@ const UI = (() => {
         render();
     }
 
+    function handleStartGame(){
+        State.startGame();
+        render();
+    }
+
+    
     function init(){
         document.getElementById('addPlayerBtn').addEventListener('click', () => handleAddPlayer());
+        document.getElementById('startGame').addEventListener('click', () => handleStartGame());
 
         render();
     }
