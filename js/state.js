@@ -24,6 +24,7 @@ const State = (() => {
 
     let players = [];
     let nextID = 1;
+    let started = false;
 
     /*
     player = {
@@ -42,6 +43,13 @@ const State = (() => {
         nextID++;
     }
 
+    function startGame(){
+        started = true;
+    }
+
+    function hasStarted(){
+        return started;
+    }
 
 
     function setScore(playerID, categoryID, value){
@@ -76,7 +84,7 @@ const State = (() => {
         return players;
     }
 
-    return { addPlayer, setScore, removeScore, getPlayers, getScore, renamePlayer, removePlayer };
+    return { addPlayer, setScore, removeScore, getPlayers, getScore, renamePlayer, removePlayer, hasStarted, startGame };
 })();
 
 const popupState = {
