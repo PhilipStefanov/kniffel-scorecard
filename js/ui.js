@@ -3,6 +3,7 @@
 const UI = (() => {
 
     function render(){
+        renderControls();
         renderHeader();
         renderBody();
     }
@@ -39,8 +40,9 @@ const UI = (() => {
             if (!State.hasStarted()){
                 removeBtn.addEventListener('click', () => handleRemovePlayer(player.id));
             }
-            
-            
+            else{
+                removeBtn.classList.add('hidden');
+            }
             
 
             th.appendChild(nameSpan);
@@ -75,7 +77,7 @@ const UI = (() => {
                 const value = Scoring.resolveValue(cat, player);
                 cell.textContent = String(value) ?? '-';
                 
-                if (cat.type === 'input'){
+                if (cat.type === 'input' && State.hasStarted()){
                     cell.addEventListener('click', () => handleInputCell(cat, player.id));
                 }
                 
@@ -158,10 +160,30 @@ const UI = (() => {
         render();
     }
 
+    function renderControls(){
+        const addPlayerBtn = document.getElementById('addPlayerBtn');
+        const endBtn = document.getElementById('endGame');
+        const startGameBtn = document.getElementById('startGame');
+        startGameBtn.classList.add('hidden');
+
+        if (State.getPlayers().length > 0){
+            startGameBtn.classList.remove('hidden');
+        }
+
+        if (!State.hasStarted()){
+            addPlayerBtn.classList.remove('hidden');
+            endBtn.classList.add('hidden');
+        } else {
+            addPlayerBtn.classList.add('hidden');
+            endBtn.classList.remove('hidden');
+        }
+    }
+
     
     function init(){
         document.getElementById('addPlayerBtn').addEventListener('click', () => handleAddPlayer());
         document.getElementById('startGame').addEventListener('click', () => handleStartGame());
+        document.getElementById('endGame').addEventListener('click', () => handleEndGame());
 
         render();
     }
