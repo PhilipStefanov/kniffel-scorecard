@@ -160,6 +160,11 @@ const UI = (() => {
         render();
     }
 
+    function handleEndGame(){
+        State.resetGame(false);
+        render();
+    }
+
     function renderControls(){
         const addPlayerBtn = document.getElementById('addPlayerBtn');
         const endBtn = document.getElementById('endGame');
