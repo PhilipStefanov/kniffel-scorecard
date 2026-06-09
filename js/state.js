@@ -51,6 +51,14 @@ const State = (() => {
         return started;
     }
 
+    function resetGame(){
+        started = false;
+
+        for (const player of players){
+            player.scores = {};
+        }
+    }
+
 
     function setScore(playerID, categoryID, value){
         const player = players.find(p => p.id === playerID); //find player with matching id
@@ -84,7 +92,7 @@ const State = (() => {
         return players;
     }
 
-    return { addPlayer, setScore, removeScore, getPlayers, getScore, renamePlayer, removePlayer, hasStarted, startGame };
+    return { addPlayer, setScore, removeScore, getPlayers, getScore, renamePlayer, removePlayer, hasStarted, startGame, resetGame };
 })();
 
 const popupState = {
