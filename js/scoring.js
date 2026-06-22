@@ -39,7 +39,7 @@ const Scoring = (() => {
 
     function resolveValue(category, player){
         if (category.type === 'input'){
-            return player.scores[category.id] ?? 0;
+            return player.scores[category.id];
         } else {
             if (category.id === 'bonus') return hasBonus(player);
             if (category.id === 'gesamt') return getUpperScore(player);

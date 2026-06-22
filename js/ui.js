@@ -75,7 +75,7 @@ const UI = (() => {
                 cell.className = 'score-cell';
                 
                 const value = Scoring.resolveValue(cat, player);
-                cell.textContent = String(value) ?? '-';
+                cell.textContent = value === null ? "" : String(value);
                 
                 if (cat.type === 'input' && State.hasStarted()){
                     cell.addEventListener('click', () => handleInputCell(cat, player.id));
@@ -161,7 +161,7 @@ const UI = (() => {
     }
 
     function handleEndGame(){
-        State.resetGame(false);
+        State.resetGame();
         render();
     }
 

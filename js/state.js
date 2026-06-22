@@ -33,12 +33,22 @@ const State = (() => {
         scores = {ones: 3, fullHouse: 25}
     }
     */
+    function initEmptyScores(){
+        let scores = {};
+        CATEGORIES.forEach((cat) => {
+            if (cat.type === 'input'){
+                scores[cat.id] = null;
+            }
+        });
+
+        return scores;
+    }
 
     function addPlayer(name){
         players.push({
             id: nextID, 
             name: name, 
-            scores: {} 
+            scores: initEmptyScores() 
         });
         nextID++;
     }
