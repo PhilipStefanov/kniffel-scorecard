@@ -23,7 +23,8 @@ const CATEGORIES = [
 const State = (() => {
 
     let players = [];
-    let nextID = 1;
+    let currentPlayerIndex = 0;
+    let nextID = 0;
     let started = false;
 
     /*
@@ -50,7 +51,11 @@ const State = (() => {
             name: name, 
             scores: initEmptyScores() 
         });
-        nextID++;
+        nextID++
+    }
+
+    function getCurrentPlayer(){
+        return players[currentPlayerIndex];
     }
 
     function startGame(){
@@ -63,17 +68,25 @@ const State = (() => {
 
     function resetGame(){
         started = false;
+        currentPlayerIndex = 0;
 
         for (const player of players){
-            player.scores = {};
+            player.scores = initEmptyScores();
         }
     }
 
 
-    function setScore(playerID, categoryID, value){
-        const player = players.find(p => p.id === playerID); //find player with matching id
-        if (!player) return; //if no player exists, stop
+    function setScore(categoryID, value){
+        player = getCurrentPlayer();
         player.scores[categoryID] = value;
+
+        currentPlayerIndex++;
+         //loop back to first player
+        if (currentPlayerIndex === players.length){
+            currentPlayerIndex = 0;
+        }
+
+
     }
 
     function getScore(playerID, categoryID){
@@ -102,12 +115,11 @@ const State = (() => {
         return players;
     }
 
-    return { addPlayer, setScore, removeScore, getPlayers, getScore, renamePlayer, removePlayer, hasStarted, startGame, resetGame };
+    return { addPlayer, setScore, removeScore, getPlayers, getScore, renamePlayer, removePlayer, hasStarted, startGame, resetGame, getCurrentPlayer };
 })();
 
 const popupState = {
     visible: true,
-    playerID: null,
     categoryID: null,
     allowedValues: []
 }
