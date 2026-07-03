@@ -26,14 +26,8 @@ const State = (() => {
     let currentPlayerIndex = 0;
     let nextID = 0;
     let started = false;
+    let moveHistory = [];
 
-    /*
-    player = {
-        id: 1,
-        name: Philip,
-        scores = {ones: 3, fullHouse: 25}
-    }
-    */
     function initEmptyScores(){
         let scores = {};
         CATEGORIES.forEach((cat) => {
@@ -69,6 +63,7 @@ const State = (() => {
     function resetGame(){
         started = false;
         currentPlayerIndex = 0;
+        moveHistory = [];
 
         for (const player of players){
             player.scores = initEmptyScores();
@@ -78,15 +73,50 @@ const State = (() => {
 
     function setScore(categoryID, value){
         player = getCurrentPlayer();
+
+        if (player.scores[categoryID] != null){
+            return false;
+        }
+
         player.scores[categoryID] = value;
+
+        moveHistory.push({
+            playerID: player.id,
+            categoryID,
+            value
+        })
 
         currentPlayerIndex++;
          //loop back to first player
         if (currentPlayerIndex === players.length){
             currentPlayerIndex = 0;
         }
+        return true;
+    }
 
+    function canEditScore(playerID, categoryID){
+        if (moveHistory.length === 0){
+            return false;
+        }
+        let size = moveHistory.length;
+        let lastMove = moveHistory[size - 1];
 
+        return (lastMove.playerID === playerID && lastMove.categoryID === categoryID);
+    }
+
+    function updateLastScore(value){
+        if (moveHistory.length == 0){
+            return false;
+        }
+
+        let size = moveHistory.length;
+        let lastMove = moveHistory[size - 1];
+
+        const player = players.find(p => p.id === lastMove.playerID);
+        player.scores[lastMove.categoryID] = value;
+        lastMove.value = value;
+
+        return true;
     }
 
     function getScore(playerID, categoryID){
@@ -115,10 +145,11 @@ const State = (() => {
         return players;
     }
 
-    return { addPlayer, setScore, removeScore, getPlayers, getScore, renamePlayer, removePlayer, hasStarted, startGame, resetGame, getCurrentPlayer };
+    return { addPlayer, setScore, removeScore, getPlayers, getScore, renamePlayer, removePlayer, hasStarted, startGame, resetGame, getCurrentPlayer, canEditScore, updateLastScore };
 })();
 
 const popupState = {
+    playerID: null,
     visible: true,
     categoryID: null,
     allowedValues: []

@@ -77,8 +77,8 @@ const UI = (() => {
                 const value = Scoring.resolveValue(cat, player);
                 cell.textContent = value === null ? "" : String(value);
                 
-                if (cat.type === 'input' && State.hasStarted() && player === State.getCurrentPlayer()){
-                    cell.addEventListener('click', () => handleInputCell(cat));
+                if (cat.type === 'input' && State.hasStarted() && ((player === State.getCurrentPlayer() && player.scores[cat.id] === null) || State.canEditScore(player.id, cat.id))){
+                    cell.addEventListener('click', () => handleInputCell(player.id, cat));
                 }
                 
                 tr.append(cell);
@@ -114,7 +114,12 @@ const UI = (() => {
             btn.className = 'popup-score-btn';
 
             btn.addEventListener('click', () => {
-                State.setScore(popupState.categoryID, value);
+                if (State.canEditScore(popupState.playerID, popupState.categoryID)){
+                    State.updateLastScore(value);
+                } else {
+                    State.setScore(popupState.categoryID, value);
+                }
+                
                 closePopup();
                 render();
             })
@@ -122,11 +127,13 @@ const UI = (() => {
             popup.appendChild(btn);
         });
 
+        
+
     }
 
-    function handleInputCell(category){
+    function handleInputCell(playerID, category){
         
-        //popupState.playerID = playerID;
+        popupState.playerID = playerID
         popupState.categoryID = category.id;
         popupState.allowedValues = Scoring.getAllowedValues(category);
 
