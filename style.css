@@ -248,6 +248,7 @@ tr[data-cat="total"] td {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     padding: 1.5rem;
+    padding-top: 2.75rem;
     border-radius: var(--radius-lg);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
     z-index: 1000;
@@ -285,6 +286,31 @@ body:has(#scorePicker:not(.hidden))::before {
     border-color: var(--primary);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.popup-score-btn-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e2e8f0;
+    color: var(--text-secondary);
+    border: none;
+    border-radius: 50%;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    padding: 0; /* Clears global button padding overrides */
+    transition: var(--transition);
+}
+
+.popup-score-btn-close:hover {
+    background-color: #fee2e2; /* Smooth, soft red background on hover */
+    color: #ef4444;            /* Vibrant red 'X' text */
 }
 
 /* ==========================================================================
@@ -381,3 +407,4 @@ body:has(#scorePicker:not(.hidden))::before {
         opacity: 1;
     }
 }
+

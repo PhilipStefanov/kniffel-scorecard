@@ -135,6 +135,16 @@ const UI = (() => {
             popup.appendChild(btn);
         });
 
+        const btn_close = document.createElement("button");
+        btn_close.textContent = 'X';
+        btn_close.className = 'popup-score-btn-close';
+
+        btn_close.addEventListener('click', () => {
+            closePopup();
+        });
+
+        popup.appendChild(btn_close);
+
     }
     function hideGameOver(){
         const overlay = document.getElementById('gameOverOverlay');
