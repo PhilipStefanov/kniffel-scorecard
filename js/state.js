@@ -70,6 +70,32 @@ const State = (() => {
         }
     }
 
+    function hasGameEnded(){
+        let size = moveHistory.length;
+        let p_size = players.length;
+
+        if (size === p_size * 13){
+            return true;
+        }
+
+        return false;
+    }
+
+    function getRanking(){
+        let ranking = [];
+
+        players.forEach(player => {
+            ranking.push({
+                name: player.name,
+                points: Scoring.totalScore(player)
+            })
+        });
+
+        ranking.sort((a,b) => b.points - a.points);
+
+        return ranking;
+
+    }
 
     function setScore(categoryID, value){
         player = getCurrentPlayer();
@@ -145,7 +171,7 @@ const State = (() => {
         return players;
     }
 
-    return { addPlayer, setScore, removeScore, getPlayers, getScore, renamePlayer, removePlayer, hasStarted, startGame, resetGame, getCurrentPlayer, canEditScore, updateLastScore };
+    return { addPlayer, setScore, removeScore, getPlayers, getScore, renamePlayer, removePlayer, hasStarted, startGame, resetGame, getCurrentPlayer, canEditScore, updateLastScore, hasGameEnded, getRanking };
 })();
 
 const popupState = {

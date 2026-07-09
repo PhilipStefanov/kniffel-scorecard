@@ -54,30 +54,34 @@ const UI = (() => {
     }
 
     function renderBody(){
-        console.log("body");
+        
         const players = State.getPlayers();
         const tbody = document.getElementById('scorecardBody');
         tbody.innerHTML = '';
 
         CATEGORIES.forEach(cat => {
             const tr = document.createElement('tr');
-
+            tr.setAttribute('data-cat', cat.id);
             const cat_cell = document.createElement('td');
             cat_cell.textContent = cat.label;
             cat_cell.className = 'category-column';
 
             tr.appendChild(cat_cell);
 
-            
-
             players.forEach(player => {
                 const cell = document.createElement('td');
-                cell.className = 'score-cell';
+                
+                const cellTypeClass = cat.type === 'calc' ? 'calc-cell' : 'input-cell';
+                cell.className = `score-cell ${cellTypeClass}`;
+                
+                if (State.hasStarted() && player === State.getCurrentPlayer()) {
+                    cell.classList.add('active-player-cell');
+                }
                 
                 const value = Scoring.resolveValue(cat, player);
                 cell.textContent = value === null ? "" : String(value);
                 
-                if (cat.type === 'input' && State.hasStarted() && ((player === State.getCurrentPlayer() && player.scores[cat.id] === null) || State.canEditScore(player.id, cat.id))){
+                if (cat.type === 'input' && State.hasStarted() && !State.hasGameEnded() && ((player === State.getCurrentPlayer() && player.scores[cat.id] === null) || State.canEditScore(player.id, cat.id))){
                     cell.addEventListener('click', () => handleInputCell(player.id, cat));
                 }
                 
@@ -119,15 +123,66 @@ const UI = (() => {
                 } else {
                     State.setScore(popupState.categoryID, value);
                 }
-                
                 closePopup();
                 render();
+                
+                if (State.hasGameEnded()){
+                    showGameOver();
+                    openOverlay();
+                } 
             })
 
             popup.appendChild(btn);
         });
 
-        
+    }
+    function hideGameOver(){
+        const overlay = document.getElementById('gameOverOverlay');
+        overlay.classList.add('hidden');
+
+    }
+
+    function openOverlay(){
+        const overlay = document.getElementById('gameOverOverlay');
+        overlay.classList.remove('hidden');
+    }
+
+    function showGameOver(){
+        const rankingList = document.getElementById('rankingList');
+        rankingList.innerHTML = '';
+
+        const ranking = State.getRanking();
+        let place = 0;
+        ranking.forEach(entry => {
+            place++;
+            const row = document.createElement('div');
+            row.className = 'ranking-row';
+
+            const position = document.createElement('span');
+            position.textContent = String(place);
+
+            const name = document.createElement('span');
+            name.textContent = entry.name;
+
+            const score = document.createElement('span');
+            score.textContent = String(entry.points);
+
+            row.appendChild(position);
+            row.appendChild(name);
+            row.appendChild(score);
+
+            rankingList.appendChild(row);
+
+        });
+
+        const close_btn = document.getElementById('gameOverBtn');
+        close_btn.textContent = 'Start again';
+        close_btn.className = 'gameOverOverlayBtn';
+
+        close_btn.addEventListener('click', () => {
+            hideGameOver();
+            handleEndGame();
+        });
 
     }
 
