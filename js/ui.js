@@ -253,6 +253,7 @@ const UI = (() => {
         } else {
             addPlayerBtn.classList.add('hidden');
             endBtn.classList.remove('hidden');
+            startGameBtn.classList.add('hidden');
         }
     }
 
