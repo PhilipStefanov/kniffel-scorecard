@@ -52,11 +52,7 @@ HTML5, CSS3, vanilla JavaScript (ES6 syntax, no modules, no frameworks, no build
  
 - [ ] Translate UI to English (or add a language toggle)
 - [ ] Persist game state with Local Storage
-- [ ] Undo/redo support
-- [ ] Mobile-responsive layout
-- [ ] Animated winner screen
-- [ ] Sound effects
 - [ ] Score statistics / game history across sessions
 ## Why this project exists
  
-Built to practice state management, DOM manipulation, event-driven programming, and keeping UI code separate from game logic in plain JavaScript — no framework as a crutch.
+Built to practice state management, DOM manipulation, event-driven programming, and keeping UI code separate from game logic in plain JavaScript.
