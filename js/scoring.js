@@ -64,7 +64,7 @@ const Scoring = (() => {
 
         if (category.section === 'lower'){
             if (category.id === 'three-oak' || category.id === 'four-oak' || category.id === 'chance'){
-                for (let i = 0; i <= 30; i++){
+                for (let i = 5; i <= 30; i++){
                     allowed.push(i);
                 }
             }
